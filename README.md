@@ -1,11 +1,8 @@
 Abdirizak kulmiye
 CNA350
-		 Real World Project: Database Shard GitHub.
-
+		Real World Project: Database Shard GitHub.
 this project is how to architecture  backend servers and shard the Data with two servers using Maxscale server,and show the client he is accessing one server but technically he is accessing two master MariaDB servers connecting with maxscale.
-
 Pre-requisites.
-
 The prerequisites for this project is you need to have virtual machine running with OS ubuntu 20.04,and you need to install docker and docker-compose.
 this is how to install docker community edition.
 
