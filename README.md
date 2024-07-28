@@ -1,4 +1,4 @@
-# Real World Project: Database Shard
+## Real World Project: Database Shard
 
 ### This project is done on Ubuntu 20.04
 ## The prerequisites:
