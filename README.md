@@ -30,11 +30,17 @@ sudo apt install mariadb-client
  
  docker-compose up -d
  ### Now you should have 3 containers maxscale_master2_1, maxscale_master_1 and maxscale_maxscale_1 as shown below
- maxscale_master2_1    docker-entrypoint.sh mysql ...   Up      0.0.0.0:4003->3306/tcp                                  
-maxscale_master_1     docker-entrypoint.sh mysql ...   Up      0.0.0.0:4001->3306/tcp                                  
+ 
+ maxscale_master2_1    docker-entrypoint.sh mysql ...   Up      0.0.0.0:4003->3306/tcp           
+ 
+maxscale_master_1     docker-entrypoint.sh mysql ...   Up      0.0.0.0:4001->3306/tcp 
+
 maxscale_maxscale_1   /usr/bin/tini -- docker-en ...   Up      3306/tcp, 0.0.0.0:4000->4000/tcp, 0.0.0.0:8989->8989/tcp
+
 ### Run this command to check that the servers up and running
+
 docker-compose exec maxscale maxctrl list servers
+
 
 ┌────────────────┬─────────┬──────┬─────────────┬─────────────────┬───────────┐
 │ Server         │ Address │ Port │ Connections │ State           │ GTID      │
@@ -48,8 +54,11 @@ docker-compose exec maxscale maxctrl list servers
 ### Run this command to connect to mariadb using the username: maxuser, maxpwd as a password and that will be on the port 4000
 
 mariadb -umaxuser -pmaxpwd -h 127.0.0.1 -P 4000
+
 Welcome to the MariaDB monitor.  Commands end with ; or \g.
+
 Your MariaDB connection id is 1
+
 Server version: 10.5.8-MariaDB-1:10.5.8+maria~focal-log mariadb.org binary distribution
 
 Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
@@ -57,9 +66,11 @@ Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 MariaDB [(none)]> 
+
 ### When you successfully navigate to mariadb use this command show databases; to check that the zipcodes_one and zipcodes_two databases there
 
  MariaDB [(none)]> show databases;
+ 
 +--------------------+
 | Database           |
 +--------------------+
@@ -70,9 +81,13 @@ MariaDB [(none)]>
 | zipcodes_two       |
 +--------------------+
 
+
 ### Executing SQL queries
+
 #### Use this command SELECT * FROM zipcodes_one.zipcodes_one LIMIT 9990,10;  to query The last 10 rows of zipcodes_one
+
 MariaDB [(none)]> SELECT * FROM zipcodes_one.zipcodes_one LIMIT 9990,10;
+
 +---------+-------------+----------------+-------+--------------+-----------+------------+-------------------------+---------------+-----------------+---------------------+------------+
 | Zipcode | ZipCodeType | City           | State | LocationType | Coord_Lat | Coord_Long | Location                | Decommisioned | TaxReturnsFiled | EstimatedPopulation | TotalWages |
 +---------+-------------+----------------+-------+--------------+-----------+------------+-------------------------+---------------+-----------------+---------------------+------------+
@@ -91,7 +106,8 @@ MariaDB [(none)]> SELECT * FROM zipcodes_one.zipcodes_one LIMIT 9990,10;
 
 ### Use this command  SELECT * FROM zipcodes_two.zipcodes_two LIMIT 10; To query the first 10 rows of zipcodes_tow
 
-MariaDB [(none)]> SELECT * FROM zipcodes_two.zipcodes_two LIMIT 10;
+MariaDB [(none)]> SELECT * FROM zipcodes_two.zipcodes_two LIMIT 10
+
 +---------+-------------+-------------+-------+--------------+-----------+------------+----------------------+---------------+-----------------+---------------------+------------+
 | Zipcode | ZipCodeType | City        | State | LocationType | Coord_Lat | Coord_Long | Location             | Decommisioned | TaxReturnsFiled | EstimatedPopulation | TotalWages |
 +---------+-------------+-------------+-------+--------------+-----------+------------+----------------------+---------------+-----------------+---------------------+------------+
@@ -106,25 +122,32 @@ MariaDB [(none)]> SELECT * FROM zipcodes_two.zipcodes_two LIMIT 10;
 |   40997 | STANDARD    | WALKER      | KY    | PRIMARY      | 36.88     | -83.71     | NA-US-KY-WALKER      | FALSE         |                 |                     |            |
 |   41139 | STANDARD    | FLATWOODS   | KY    | PRIMARY      | 38.51     | -82.72     | NA-US-KY-FLATWOODS   | FALSE         | 3692            | 6748                | 121902277  |
 +---------+-------------+-------------+-------+--------------+-----------+------------+----------------------+---------------+------
+
 ### Use this command SELECT Zipcode FROM zipcodes_one.zipcodes_one ORDER BY Zipcode DESC LIMIT 1; to view the largest zipcode number in zipcodes_one
+
 MariaDB [(none)]> SELECT Zipcode FROM zipcodes_one.zipcodes_one ORDER BY Zipcode DESC LIMIT 1;
+
 +---------+
 | Zipcode |
 +---------+
 |   47750 |
 +---------+
+
 ### Use this command SELECT Zipcode FROM zipcodes_two.zipcodes_two ORDER BY Zipcode ASC LIMIT 1;  To view the smallest zipcode number in zipcodes_two
 
 MariaDB [(none)]> SELECT Zipcode FROM zipcodes_two.zipcodes_two ORDER BY Zipcode ASC LIMIT 1;
+
 +---------+
 | Zipcode |
 +---------+
 |   38257 |
 +---------+
 #### Once complete, to remove the cluster and maxscale containers:
+
 docker-compose down -v
 
 Sources:
+
 (https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04)
 
 (https://docs.docker.com/compose/install/)
